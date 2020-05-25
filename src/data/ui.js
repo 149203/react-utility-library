@@ -484,7 +484,7 @@ export const uiData = [
       inputs: 2,
       type: "algorithm",
       typeNum: 400,
-      isFavorite: false,
+      isFavorite: true,
       order: 407,
    },
    {
