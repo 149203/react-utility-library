@@ -4,8 +4,15 @@ export default function FunctionUI(props) {
    const renderInputs = (num) => {
       const inputs = [];
       for (let i = 0; i < num; i++) {
+         const id = `input-${props.name}-${i}`;
+
          inputs.push(
-            <input type="text" className="form-control inline-action" />
+            <input
+               type="text"
+               className="form-control inline-action"
+               key={id}
+               id={id}
+            />
          );
       }
       return inputs;
