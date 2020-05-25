@@ -4,7 +4,6 @@ export default function FunctionUI(props) {
    const renderInputs = (num) => {
       const inputs = [];
       for (let i = 0; i < num; i++) {
-         // render some JSX
          inputs.push(
             <input type="text" className="form-control inline-action" />
          );
