@@ -7,29 +7,12 @@ import orderBy from "lodash/orderBy";
 export default class App extends React.Component {
    constructor() {
       super();
-      this.state = {
-         allFuncs: uiData,
-         displayedFuncs: uiData,
-         isFavoritesChecked: false,
-      };
-   }
-
-   toggleFavorites(e) {
-      this.setState({ isFavoritesChecked: !this.state.isFavoritesChecked });
-      const functionList = [...this.state.allFuncs];
-      const value = e.target.id;
-      console.log(value);
-      if (value === "viewMode-favorites") {
-         const filteredList = functionList.filter((func) => {
-            return func.isFavorite;
-         });
-         this.setState({ displayedFuncs: filteredList });
-      } else {
-         this.setState({ displayedFuncs: this.state.allFuncs });
-      }
+      console.log(uiData);
    }
 
    render() {
+      const orderedData = orderBy(uiData, "name", "desc");
+
       const getFunctionsNum = () => {
          return 6;
       };
@@ -50,8 +33,6 @@ export default class App extends React.Component {
                         id="viewMode-all"
                         name="viewMode"
                         className="custom-control-input"
-                        checked={!this.state.isFavoritesChecked}
-                        onChange={(e) => this.toggleFavorites(e)}
                      />
                      <label
                         className="custom-control-label"
@@ -66,8 +47,6 @@ export default class App extends React.Component {
                         id="viewMode-favorites"
                         name="viewMode"
                         className="custom-control-input"
-                        checked={this.state.isFavoritesChecked}
-                        onChange={(e) => this.toggleFavorites(e)}
                      />
                      <label
                         className="custom-control-label"
@@ -98,7 +77,7 @@ export default class App extends React.Component {
                      </div>
                   </div>
                </div>
-               {this.state.displayedFuncs.map((functionUI) => {
+               {orderedData.map((functionUI) => {
                   const { name, desc, inputs } = functionUI;
 
                   return (
