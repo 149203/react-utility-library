@@ -10,8 +10,9 @@ export default class App extends React.Component {
       console.log(uiData);
       this.state = {
          isFavoritesChecked: false,
-         allFuncs: uiData,
-         displayedFuncs: uiData,
+         allFuncs: orderBy(uiData, "order", "desc"),
+         displayedFuncs: orderBy(uiData, "order", "desc"),
+         orderBy: '["order", "desc"]',
       };
    }
 
@@ -31,16 +32,26 @@ export default class App extends React.Component {
          const filteredFuncs = favoriteFuncs.filter((func) => {
             return func.name.toLowerCase().indexOf(searchInput) >= 0;
          });
-         const orderedFuncs = orderBy(filteredFuncs, "name", "desc");
+         const orderArr = JSON.parse(this.state.orderBy);
+         console.log("orderArr: ", orderArr);
+         const orderedFuncs = orderBy(filteredFuncs, ...orderArr);
          this.setState({ displayedFuncs: orderedFuncs });
       } else {
          this.setState({ isFavoritesChecked: false });
          const filteredFuncs = allFuncs.filter((func) => {
             return func.name.toLowerCase().indexOf(searchInput) >= 0;
          });
-         const orderedFuncs = orderBy(filteredFuncs, "name", "desc");
+         const orderArr = JSON.parse(this.state.orderBy);
+         console.log("orderArr: ", ...orderArr);
+         const orderedFuncs = orderBy(filteredFuncs, ...orderArr);
          this.setState({ displayedFuncs: orderedFuncs });
       }
+   }
+
+   changeOrder(e) {
+      this.setState({ orderBy: e.target.value }, () => {
+         this.filterFuncs();
+      });
    }
 
    render() {
@@ -110,11 +121,17 @@ export default class App extends React.Component {
                         />
                      </div>
                      <div className="col-6">
-                        <select className="form-control">
-                           <option>Most recent</option>
-                           <option>Oldest</option>
-                           <option>A - Z</option>
-                           <option>Z - A</option>
+                        <select
+                           value={this.state.orderBy}
+                           className="form-control"
+                           onChange={(e) => this.changeOrder(e)}
+                        >
+                           <option value='["order", "desc"]'>
+                              Most recent
+                           </option>
+                           <option value='["order", "asc"]'>Oldest</option>
+                           <option value='["name", "asc"]'>A - Z</option>
+                           <option value='["name", "desc"]'>Z - A</option>
                         </select>
                      </div>
                   </div>

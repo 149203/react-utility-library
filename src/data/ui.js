@@ -113,7 +113,7 @@ export const uiData = [
       inputs: 1,
       type: "basic",
       typeNum: 100,
-      isFavorite: false,
+      isFavorite: true,
       order: 112,
    },
    {
