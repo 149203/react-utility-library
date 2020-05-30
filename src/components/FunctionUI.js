@@ -1,6 +1,4 @@
 import React from "react";
-import utils from "../utils/functions";
-import convertDataType from "../utils/convertDataType";
 
 export default function FunctionUI(props) {
    const renderInputs = (num) => {
@@ -20,24 +18,6 @@ export default function FunctionUI(props) {
       return inputs;
    };
 
-   const getUserInput = (e, inputs, name) => {
-      const inputValues = [];
-      for (let i = 0; i < inputs; i++) {
-         const element = document.getElementById(`input-${name}-${i}`);
-         const value = element.value;
-         // console.log({ element, value });
-         const convertedValue = convertDataType(value);
-         inputValues.push(convertedValue);
-      }
-      // const result = utils[name](...inputValues);
-      // console.log(result);
-      // utils.increment
-
-      console.log(inputValues);
-      console.log("props name: ", props.name);
-      props.showResult(name);
-   };
-
    return (
       <div className="col-12 col-lg-8 offset-lg-2 mb-5">
          <p className="name">
@@ -48,14 +28,7 @@ export default function FunctionUI(props) {
          </pre>
          <div className="actions float-right">
             {renderInputs(props.inputs)}
-            <button
-               className="btn btn-primary inline-action"
-               onClick={(e) => {
-                  getUserInput(e, props.inputs, props.name);
-               }}
-            >
-               Run
-            </button>
+            <button className="btn btn-primary inline-action">Run</button>
          </div>
          <div className="clearfix mb-3"></div>
          <div className="alert alert-primary" style={{ display: "none" }}></div>
