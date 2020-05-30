@@ -1,6 +1,9 @@
 import React from "react";
+import utils from "../utils/utils";
 
 export default function FunctionUI(props) {
+   console.log(utils.add(4, "pizza"));
+
    const renderInputs = (num) => {
       const inputs = [];
       for (let i = 0; i < num; i++) {
@@ -15,6 +18,7 @@ export default function FunctionUI(props) {
             />
          );
       }
+
       return inputs;
    };
 
