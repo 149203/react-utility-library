@@ -5,15 +5,30 @@ import FunctionUI from "./components/FunctionUI";
 import orderBy from "lodash/orderBy";
 
 export default class App extends React.Component {
-   constructor() {
-      super();
+   constructor(props) {
+      super(props);
       console.log(uiData);
+      const components = uiData.map((component) => {
+         return {
+            name: component.name,
+            desc: component.desc,
+            inputs: component.inputs,
+            isFavorite: component.isFavorite,
+            order: component.order,
+            type: component.type,
+            typeNum: component.typeNum,
+            isResultOpen: false,
+            result: null,
+            isCodeOpen: false,
+         };
+      });
       this.state = {
          isFavoritesChecked: false,
-         allFuncs: orderBy(uiData, "order", "desc"),
-         displayedFuncs: orderBy(uiData, "order", "desc"),
+         allFuncs: orderBy(components, "order", "desc"),
+         displayedFuncs: orderBy(components, "order", "desc"),
          orderBy: '["order", "desc"]',
       };
+      //this.showResult = this.showResult.bind(this); // needed when passing a function to a child
    }
 
    filterFuncs(e) {
@@ -52,6 +67,12 @@ export default class App extends React.Component {
       this.setState({ orderBy: e.target.value }, () => {
          this.filterFuncs();
       });
+   }
+
+   showResult(name) {
+      const allFuncs = [...this.state.allFuncs];
+      console.log(allFuncs);
+      console.log(name);
    }
 
    render() {
@@ -145,6 +166,7 @@ export default class App extends React.Component {
                         name={name}
                         desc={desc}
                         inputs={inputs}
+                        showResult={() => this.showResult}
                      />
                   );
                })}
